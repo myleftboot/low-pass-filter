@@ -1,4 +1,3 @@
-tmp
-*.class
-*.pyc
-*.pyo
+# Build folder and log file
+build/
+build.log

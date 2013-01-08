@@ -10,77 +10,50 @@ Ti.include('low_pass_adaptive.js');
 // create base UI tab and root window
 //
 var win1 = Titanium.UI.createWindow({  
-    title:'Tab 1',
-    backgroundColor:'#fff'
-});
-var tab1 = Titanium.UI.createTab({  
-    icon:'KS_nav_views.png',
-    title:'Tab 1',
-    window:win1
 });
 
-var label1 = Titanium.UI.createLabel({
-	color:'#999',
-	text:'Raw',
-	borderColor:'black',
-	font:{fontSize:20,fontFamily:'Helvetica Neue'},
-	textAlign:'center',
-	width:150,
-	height:30,
-	top:0
-});
+var layout = Ti.UI.createView({layout: 'vertical'});
 
-win1.add(label1);
+var rawSlider = Ti.UI.createSlider({max: 2
+	                               ,min:-2});
+var butterSlider = Ti.UI.createSlider({max: 2
+	                               ,min:-2});
+var lowSlider = Ti.UI.createSlider({max: 2
+	                               ,min:-2});
+var truncSlider = Ti.UI.createSlider({max: 2
+	                               ,min:-2});
+var rawLabel = Titanium.UI.createLabel({});
 
-var label2 = Titanium.UI.createLabel({
-	color:'#999',
-	text:'Butter',
-	borderColor:'black',
-	font:{fontSize:20,fontFamily:'Helvetica Neue'},
-	textAlign:'center',
-	height:30,
-	top:80,
-	width:150
-});
+var butterLabel = Titanium.UI.createLabel({});
 
-win1.add(label2);
-
-var label3 = Titanium.UI.createLabel({
-	color:'#999',
-	text:'Low',
-	borderColor:'black',
-	font:{fontSize:20,fontFamily:'Helvetica Neue'},
-	textAlign:'center',
-	height:30,
-	top:150,
-	width:150
-});
-
-win1.add(label3);
+var lowLabel = Titanium.UI.createLabel({});
+var truncLabel = Titanium.UI.createLabel({});
+layout.add(rawSlider);
+layout.add(rawLabel);
+layout.add(butterSlider);
+layout.add(butterLabel);
+layout.add(lowSlider);
+layout.add(lowLabel);
+layout.add(truncSlider);
+layout.add(truncLabel);
+win1.add(layout);
 
 ButterworthLowPassFilter();
 
-Ti.API.info('Platform'+Ti.Platform.version);
-var ver = Ti.Platform.version
-Ti.API.info('Platform'+ver.substring(0, ver.indexOf('.')));
-
-fred = function(e)  {
+updateSliders = function(e)  {
 	var raw = Math.atan(e.z/e.y);
-	var pitch = Filter(raw)
+	var butter = Filter(raw)
 	var low = lowPassFilter(raw);
-	label1.text = pitch;
-	label2.text = raw;
-	label3.text =  low;
-	
-	
-	Ti.API.info('Raw :'+raw+' filtered : '+pitch+ ' low '+low);
+	rawLabel.text = 'raw '+parseFloat(raw).toFixed(4);
+	rawSlider.value = raw;
+	butterLabel.text = 'butterworth '+parseFloat(butter).toFixed(4);
+	butterSlider.value = butter;
+	lowLabel.text =  'low '+parseFloat(low).toFixed(4);
+	lowSlider.value = low;
+	truncLabel.text =  'truncated '+parseFloat(raw).toFixed(1);
+	truncSlider.value = parseFloat(raw).toFixed(1);
 };
-Ti.Accelerometer.addEventListener('update', fred);
-//
-//  add tabs
-//
-tabGroup.addTab(tab1);  
 
+Ti.Accelerometer.addEventListener('update', updateSliders);
 
-// open tab group
-tabGroup.open();
+win1.open();
