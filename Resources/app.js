@@ -42,11 +42,9 @@ var lowSlider = Ti.UI.createSlider({max: 2
 var truncSlider = Ti.UI.createSlider({max: 2
 	                               ,min:-2});
 var rawLabel = Titanium.UI.createLabel({});
-
-var butterLabel = Titanium.UI.createLabel({});
-
 var lowLabel = Titanium.UI.createLabel({});
 var truncLabel = Titanium.UI.createLabel({});
+
 layout.add(rawSlider);
 layout.add(rawLabel);
 layout.add(lowSlider);
