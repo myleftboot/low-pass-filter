@@ -1,9 +1,6 @@
 // this sets the background color of the master UIView (when there are no windows/tab groups on it)
 Titanium.UI.setBackgroundColor('#000');
 
-// create tab group
-var tabGroup = Titanium.UI.createTabGroup();
-
 var noiseAttenuation = 3;
 var accelerometerMinStep = 0.02;
 var filterConstant = 0.2;
