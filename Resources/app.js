@@ -24,11 +24,23 @@ lowPassFilter = function(val)
     
     return lastValue;
 }
+
+function rotateLayout() {
+	win1.orientationModes = [Ti.UI.LANDSCAPE_LEFT];
+	switchOrientation.hide();
+}
 //
 // create base UI tab and root window
 //
 var win1 = Titanium.UI.createWindow({  
 });
+
+win1.orientationModes = [
+	Titanium.UI.PORTRAIT,
+	Titanium.UI.UPSIDE_PORTRAIT,
+	Titanium.UI.LANDSCAPE_LEFT,
+	Titanium.UI.LANDSCAPE_RIGHT
+]; 
 
 var layout = Ti.UI.createView({layout: 'vertical'});
 
@@ -41,6 +53,9 @@ var truncSlider = Ti.UI.createSlider({max: 2
 var rawLabel = Titanium.UI.createLabel({});
 var lowLabel = Titanium.UI.createLabel({});
 var truncLabel = Titanium.UI.createLabel({});
+var switchOrientation = Ti.UI.createButton({title: 'Make Landscape'});
+
+switchOrientation.addEventListener('click', rotateLayout);
 
 layout.add(rawSlider);
 layout.add(rawLabel);
@@ -48,6 +63,7 @@ layout.add(lowSlider);
 layout.add(lowLabel);
 layout.add(truncSlider);
 layout.add(truncLabel);
+layout.add(switchOrientation);
 win1.add(layout);
 
 updateSliders = function(e)  {
